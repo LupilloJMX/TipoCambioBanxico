@@ -2,11 +2,16 @@
 <ContentPage
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:TipoCambioBanxico"
     x:Class="TipoCambioBanxico.MainPage"
     Title="Tipo de cambio Banxico">
 
-    <ScrollView>
-        <VerticalStackLayout Padding="24" Spacing="16">
+    <Grid
+        Padding="24"
+        RowDefinitions="Auto,Auto,*"
+        RowSpacing="16">
+
+        <VerticalStackLayout Grid.Row="0" Spacing="12">
 
             <Label
                 Text="Consulta de tipo de cambio"
@@ -27,7 +32,7 @@
 
             <Button
                 x:Name="ConsultarButton"
-                Text="Consultar" 
+                Text="Consultar"
                 Clicked="ConsultarButton_Clicked" />
 
             <Label
@@ -35,6 +40,66 @@
                 Text="Selecciona las fechas que deseas consultar." />
 
         </VerticalStackLayout>
-    </ScrollView>
 
+        <!-- Encabezados de la tabla -->
+        <Grid
+            Grid.Row="1"
+            ColumnDefinitions="*,*"
+            Padding="12"
+            BackgroundColor="#174A6E">
+
+            <Label
+                Grid.Column="0"
+                Text="Fecha"
+                TextColor="White"
+                FontAttributes="Bold" />
+
+            <Label
+                Grid.Column="1"
+                Text="Tipo de cambio"
+                TextColor="White"
+                FontAttributes="Bold"
+                HorizontalTextAlignment="End" />
+
+        </Grid>
+
+        <!-- Filas de resultados -->
+        <CollectionView
+            x:Name="ResultadosCollection"
+            Grid.Row="2"
+            SelectionMode="None">
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="local:BanxicoDato">
+
+                    <Grid
+                        RowDefinitions="Auto,1"
+                        ColumnDefinitions="*,*">
+
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Margin="12"
+                            Text="{Binding Fecha}" />
+
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Margin="12"
+                            Text="{Binding Dato}"
+                            HorizontalTextAlignment="End" />
+
+                        <BoxView
+                            Grid.Row="1"
+                            Grid.ColumnSpan="2"
+                            Color="#D9E2EC" />
+
+                    </Grid>
+
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+
+        </CollectionView>
+
+    </Grid>
 </ContentPage>
