@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="TipoCambioBanxico.MainPage"
+    Title="Tipo de cambio Banxico">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="16">
+
+            <Label
+                Text="Consulta de tipo de cambio"
+                FontSize="24"
+                FontAttributes="Bold" />
+
+            <Label Text="Fecha inicial" />
+
+            <DatePicker
+                x:Name="FechaInicialPicker"
+                Format="dd/MM/yyyy" />
+
+            <Label Text="Fecha final" />
+
+            <DatePicker
+                x:Name="FechaFinalPicker"
+                Format="dd/MM/yyyy" />
+
+            <Button
+                x:Name="ConsultarButton"
+                Text="Consultar" 
+                Clicked="ConsultarButton_Clicked" />
+
+            <Label
+                x:Name="ResultadoLabel"
+                Text="Selecciona las fechas que deseas consultar." />
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
