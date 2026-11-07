@@ -30,10 +30,22 @@
                 x:Name="FechaFinalPicker"
                 Format="dd/MM/yyyy" />
 
+            <Label Text="Serie" />
+
+            <Picker
+                x:Name="SeriePicker"
+                Title="Selecciona una serie">
+                <Picker.Items>
+                    <x:String>FIX (SF43718)</x:String>
+                    <x:String>Fecha de liquidación (SF60653)</x:String>
+                    <x:String>Euro (SF46410)</x:String>
+                </Picker.Items>
+            </Picker>
+
             <Button
                 x:Name="ConsultarButton"
                 Text="Consultar"
-                Clicked="ConsultarButton_Clicked" />
+                Clicked="ConsultarButton_Clicked" BackgroundColor="#2CE39F" />
 
             <Label
                 x:Name="ResultadoLabel"
@@ -41,7 +53,7 @@
 
         </VerticalStackLayout>
 
-        <!-- Encabezados de la tabla -->
+     
         <Grid
             Grid.Row="1"
             ColumnDefinitions="*,*"
@@ -63,7 +75,7 @@
 
         </Grid>
 
-        <!-- Filas de resultados -->
+      
         <CollectionView
             x:Name="ResultadosCollection"
             Grid.Row="2"

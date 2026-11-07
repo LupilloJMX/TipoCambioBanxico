@@ -19,6 +19,7 @@ namespace TipoCambioBanxico
         public async Task<BanxicoResponse> ConsultarAsync(
             DateTime fechaInicial,
             DateTime fechaFinal,
+             string idSerie,
             string token)
         {
             if (fechaInicial.Date > fechaFinal.Date)
@@ -41,7 +42,7 @@ namespace TipoCambioBanxico
             // Serie del tipo de cambio FIX.
             string url =
                 "https://www.banxico.org.mx/SieAPIRest/service/v1/" +
-                $"series/SF43718/datos/{inicio}/{fin}";
+                $"series/{idSerie}/datos/{inicio}/{fin}";
 
             using var solicitud = new HttpRequestMessage(HttpMethod.Get, url);
 

@@ -2,6 +2,7 @@
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace TipoCambioBanxico;
 
@@ -41,7 +42,7 @@ public partial class MainPage : ContentPage
             return;
         }
 
-        if (string.IsNullOrWhiteSpace(BanxicoToken) ||BanxicoToken == "PEGA_AQUI_TU_TOKEN")
+        if (string.IsNullOrWhiteSpace(BanxicoToken) ||BanxicoToken == "TOKEN")
         {
             await DisplayAlert(
                 "Token requerido",
@@ -51,15 +52,35 @@ public partial class MainPage : ContentPage
             return;
         }
 
+        string? idSerie = SeriePicker.SelectedIndex switch
+        {
+            0 => "SF43718",
+            1 => "SF60653",
+            2 => "SF46410",
+            _ => null
+        };
+
+        if (idSerie == null)
+        {
+            await DisplayAlert(
+                "Serie requerida",
+                "Selecciona una serie.",
+                "Aceptar");
+
+            return;
+        }
+
         ConsultarButton.IsEnabled = false;
+        ResultadosCollection.ItemsSource = null;
         ResultadoLabel.Text = "Consultando Banxico...";
 
         try
         {
             var respuesta = await _banxicoService.ConsultarAsync(
-                fechaInicial.Value.Date,
-                fechaFinal.Value.Date,
-                BanxicoToken);
+        fechaInicial.Value.Date,
+        fechaFinal.Value.Date,
+        idSerie,
+        BanxicoToken);
 
             if (respuesta.Bmx.Series.Count == 0)
             {
@@ -68,32 +89,26 @@ public partial class MainPage : ContentPage
             }
 
             var serie = respuesta.Bmx.Series[0];
-            var texto = new StringBuilder();
-            int cantidad = 0;
 
-            texto.AppendLine(serie.Titulo);
-            texto.AppendLine();
+            var datos = serie.Datos?
+                .Where(d => !string.IsNullOrWhiteSpace(d.Dato)
+                            && d.Dato != "N/E")
+                .ToList();
 
-            if (serie.Datos != null)
+            if (datos == null || datos.Count == 0)
             {
-                foreach (var dato in serie.Datos)
-                {
-                    if (string.IsNullOrWhiteSpace(dato.Dato) ||
-                        dato.Dato == "N/E")
-                    {
-                        continue;
-                    }
+                ResultadoLabel.Text =
+                    "No hay datos disponibles para el periodo seleccionado.";
 
-                    texto.AppendLine(
-                        $"{dato.Fecha}: {dato.Dato} MXN por USD");
-
-                    cantidad++;
-                }
+                return;
             }
 
-            ResultadoLabel.Text = cantidad > 0
-                ? texto.ToString()
-                : "No hay datos disponibles para el periodo seleccionado.";
+            ResultadosCollection.ItemsSource = datos;
+
+            ResultadoLabel.Text =
+                $"Tipo de cambio {idSerie} · MXN por USD\n" +
+                $"Registros encontrados: {datos.Count}";
+
         }
         catch (HttpRequestException ex)
         {
