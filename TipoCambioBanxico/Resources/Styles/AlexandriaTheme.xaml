@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!-- ====== SURFACE TIERS (jerarquía por capas, sin líneas) ====== -->
+    <Color x:Key="SurfaceDim">#F2F1EC</Color>
+    <Color x:Key="SurfaceLowest">#FFFFFF</Color>
+    <Color x:Key="SurfaceLow">#EAE7DF</Color>
+    <Color x:Key="SurfaceHigh">#E2DED4</Color>
+
+    <!-- ====== ACENTOS EDITORIALES ====== -->
+    <Color x:Key="Primary">#094CB2</Color>
+    <Color x:Key="PrimaryContainer">#3B6FD4</Color>
+    <Color x:Key="Tertiary">#6D5E00</Color>
+    <Color x:Key="OnSurface">#1B1C18</Color>
+    <Color x:Key="OnSurfaceVariant">#4A4B44</Color>
+    <Color x:Key="OutlineVariant">#C9C5BA</Color>
+
+    <!-- ====== TIPOGRAFÍA (fallback seguro si aún no registras fuentes) ====== -->
+    <x:String x:Key="SerifFont">NotoSerif</x:String>
+    <x:String x:Key="BodyFont">Inter</x:String>
+    <x:String x:Key="LabelFont">PublicSans</x:String>
+
+</ResourceDictionary>

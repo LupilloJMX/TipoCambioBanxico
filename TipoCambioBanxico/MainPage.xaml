@@ -4,114 +4,229 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:TipoCambioBanxico"
     x:Class="TipoCambioBanxico.MainPage"
-    Title="Tipo de cambio Banxico">
+    Title="Tipo de cambio Banxico"
+    BackgroundColor="{StaticResource SurfaceDim}">
 
     <Grid
-        Padding="24"
+        Padding="28,36,28,24"
         RowDefinitions="Auto,Auto,*"
-        RowSpacing="16">
+        RowSpacing="28">
 
-        <VerticalStackLayout Grid.Row="0" Spacing="12">
+        <!-- ====== ENCABEZADO EDITORIAL ====== -->
+        <VerticalStackLayout Grid.Row="0" Spacing="22">
 
+            <!-- Kicker (label tipo metadata) -->
+            <Label
+                Text="BANCO DE MÉXICO · SERIE HISTÓRICA"
+                FontFamily="{StaticResource LabelFont}"
+                FontSize="11"
+                CharacterSpacing="2"
+                TextColor="{StaticResource Tertiary}" />
+
+            <!-- Headline serif -->
             <Label
                 Text="Consulta de tipo de cambio"
-                FontSize="24"
-                FontAttributes="Bold" />
+                FontFamily="{StaticResource SerifFont}"
+                FontSize="34"
+                LineHeight="1.15"
+                TextColor="{StaticResource OnSurface}" />
 
-            <Label Text="Fecha inicial" />
-
-            <DatePicker
-                x:Name="FechaInicialPicker"
-                Format="dd/MM/yyyy" />
-
-            <Label Text="Fecha final" />
-
-            <DatePicker
-                x:Name="FechaFinalPicker"
-                Format="dd/MM/yyyy" />
-
-            <Label Text="Serie" />
-
-            <Picker
-                x:Name="SeriePicker"
-                Title="Selecciona una serie">
-                <Picker.Items>
-                    <x:String>FIX (SF43718)</x:String>
-                    <x:String>Fecha de liquidación (SF60653)</x:String>
-                    <x:String>Euro (SF46410)</x:String>
-                </Picker.Items>
-            </Picker>
-
-            <Button
-                x:Name="ConsultarButton"
-                Text="Consultar"
-                Clicked="ConsultarButton_Clicked" BackgroundColor="#2CE39F" />
-
+            <!-- Subtítulo narrativo (whitespace como estructura) -->
             <Label
-                x:Name="ResultadoLabel"
-                Text="Selecciona las fechas que deseas consultar." />
+                Text="Selecciona un rango de fechas y la serie que deseas consultar. Los resultados se presentarán en orden cronológico."
+                FontFamily="{StaticResource BodyFont}"
+                FontSize="14"
+                LineHeight="1.5"
+                TextColor="{StaticResource OnSurfaceVariant}" />
 
+            <!-- ====== FORMULARIO ====== -->
+            <Grid
+                ColumnDefinitions="*,*"
+                RowDefinitions="Auto,Auto,Auto,Auto,Auto"
+                ColumnSpacing="20"
+                RowSpacing="20">
+
+                <!-- Fecha inicial -->
+                <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="8">
+                    <Label Text="FECHA INICIAL"
+                           FontFamily="{StaticResource LabelFont}"
+                           FontSize="11" CharacterSpacing="1.5"
+                           TextColor="{StaticResource OnSurfaceVariant}" />
+                    <Border
+                        StrokeThickness="1"
+                        Stroke="{StaticResource OutlineVariant}"
+                        BackgroundColor="{StaticResource SurfaceLowest}"
+                        Padding="14,4"
+                        StrokeShape="RoundRectangle 12">
+                        <DatePicker
+                            x:Name="FechaInicialPicker"
+                            Format="dd/MM/yyyy"
+                            FontFamily="{StaticResource BodyFont}"
+                            TextColor="{StaticResource OnSurface}" />
+                    </Border>
+                </VerticalStackLayout>
+
+                <!-- Fecha final -->
+                <VerticalStackLayout Grid.Row="0" Grid.Column="1" Spacing="8">
+                    <Label Text="FECHA FINAL"
+                           FontFamily="{StaticResource LabelFont}"
+                           FontSize="11" CharacterSpacing="1.5"
+                           TextColor="{StaticResource OnSurfaceVariant}" />
+                    <Border
+                        StrokeThickness="1"
+                        Stroke="{StaticResource OutlineVariant}"
+                        BackgroundColor="{StaticResource SurfaceLowest}"
+                        Padding="14,4"
+                        StrokeShape="RoundRectangle 12">
+                        <DatePicker
+                            x:Name="FechaFinalPicker"
+                            Format="dd/MM/yyyy"
+                            FontFamily="{StaticResource BodyFont}"
+                            TextColor="{StaticResource OnSurface}" />
+                    </Border>
+                </VerticalStackLayout>
+
+                <!-- Serie (full width) -->
+                <VerticalStackLayout Grid.Row="1" Grid.ColumnSpan="2" Spacing="8">
+                    <Label Text="SERIE"
+                           FontFamily="{StaticResource LabelFont}"
+                           FontSize="11" CharacterSpacing="1.5"
+                           TextColor="{StaticResource OnSurfaceVariant}" />
+                    <Border
+                        StrokeThickness="1"
+                        Stroke="{StaticResource OutlineVariant}"
+                        BackgroundColor="{StaticResource SurfaceLowest}"
+                        Padding="14,4"
+                        StrokeShape="RoundRectangle 12">
+                        <Picker
+                            x:Name="SeriePicker"
+                            Title="Selecciona una serie"
+                            FontFamily="{StaticResource BodyFont}"
+                            TextColor="{StaticResource OnSurface}">
+                            <Picker.Items>
+                                <x:String>FIX (SF43718)</x:String>
+                                <x:String>Fecha de liquidación (SF60653)</x:String>
+                                <x:String>Euro (SF46410)</x:String>
+                            </Picker.Items>
+                        </Picker>
+                    </Border>
+                </VerticalStackLayout>
+
+                <!-- CTA (una sola acción primaria) -->
+                <Button
+                    x:Name="ConsultarButton"
+                    Grid.Row="2" Grid.ColumnSpan="2"
+                    Text="Consultar tipo de cambio"
+                    Clicked="ConsultarButton_Clicked"
+                    FontFamily="{StaticResource BodyFont}"
+                    FontSize="15"
+                    FontAttributes="Bold"
+                    TextColor="White"
+                    CornerRadius="14"
+                    HeightRequest="54"
+                    Margin="0,4,0,0">
+                    <Button.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="{StaticResource Primary}" Offset="0" />
+                            <GradientStop Color="{StaticResource PrimaryContainer}" Offset="1" />
+                        </LinearGradientBrush>
+                    </Button.Background>
+                </Button>
+
+                <!-- Estado (label existente) -->
+                <Label
+                    x:Name="ResultadoLabel"
+                    Grid.Row="3" Grid.ColumnSpan="2"
+                    Text="Selecciona las fechas que deseas consultar."
+                    FontFamily="{StaticResource BodyFont}"
+                    FontSize="13"
+                    HorizontalTextAlignment="Center"
+                    TextColor="{StaticResource OnSurfaceVariant}"
+                    Margin="0,8,0,0" />
+            </Grid>
         </VerticalStackLayout>
 
-     
-        <Grid
+        <!-- ====== CABECERA DE TABLA (surface-high, sin líneas) ====== -->
+        <Border
             Grid.Row="1"
-            ColumnDefinitions="*,*"
-            Padding="12"
-            BackgroundColor="#174A6E">
+            BackgroundColor="{StaticResource SurfaceHigh}"
+            StrokeThickness="0"
+            Padding="20,14"
+            StrokeShape="RoundRectangle 12">
+            <Grid ColumnDefinitions="*,*">
+                <Label Grid.Column="0"
+                       Text="FECHA"
+                       FontFamily="{StaticResource LabelFont}"
+                       FontSize="11" CharacterSpacing="1.5"
+                       TextColor="{StaticResource OnSurfaceVariant}" />
+                <Label Grid.Column="1"
+                       Text="TIPO DE CAMBIO"
+                       FontFamily="{StaticResource LabelFont}"
+                       FontSize="11" CharacterSpacing="1.5"
+                       TextColor="{StaticResource OnSurfaceVariant}"
+                       HorizontalTextAlignment="End" />
+            </Grid>
+        </Border>
 
-            <Label
-                Grid.Column="0"
-                Text="Fecha"
-                TextColor="White"
-                FontAttributes="Bold" />
-
-            <Label
-                Grid.Column="1"
-                Text="Tipo de cambio"
-                TextColor="White"
-                FontAttributes="Bold"
-                HorizontalTextAlignment="End" />
-
-        </Grid>
-
-      
+        <!-- ====== LISTA EDITORIAL ====== -->
         <CollectionView
             x:Name="ResultadosCollection"
             Grid.Row="2"
-            SelectionMode="None">
+            SelectionMode="None"
+            Margin="0,-12,0,0">
+
+            <CollectionView.EmptyView>
+                <VerticalStackLayout Padding="24,48" Spacing="8">
+                    <Label Text="Sin registros en este rango."
+                           FontFamily="{StaticResource SerifFont}"
+                           FontSize="18"
+                           HorizontalTextAlignment="Center"
+                           TextColor="{StaticResource OnSurface}" />
+                    <Label Text="Ajusta las fechas o selecciona otra serie."
+                           FontFamily="{StaticResource BodyFont}"
+                           FontSize="13"
+                           HorizontalTextAlignment="Center"
+                           TextColor="{StaticResource OnSurfaceVariant}" />
+                </VerticalStackLayout>
+            </CollectionView.EmptyView>
 
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="local:BanxicoDato">
 
-                    <Grid
-                        RowDefinitions="Auto,1"
-                        ColumnDefinitions="*,*">
+                    <!-- Card sin líneas: fondo alternado por tier -->
+                    <Border
+                        BackgroundColor="{StaticResource SurfaceLowest}"
+                        StrokeThickness="0"
+                        StrokeShape="RoundRectangle 12"
+                        Padding="20,16"
+                        Margin="0,4">
 
-                        <Label
-                            Grid.Row="0"
-                            Grid.Column="0"
-                            Margin="12"
-                            Text="{Binding Fecha}" />
+                        <Grid ColumnDefinitions="*,*">
 
-                        <Label
-                            Grid.Row="0"
-                            Grid.Column="1"
-                            Margin="12"
-                            Text="{Binding Dato}"
-                            HorizontalTextAlignment="End" />
+                            <!-- Fecha en serif (dato editorial) -->
+                            <Label
+                                Grid.Column="0"
+                                Text="{Binding Fecha}"
+                                FontFamily="{StaticResource SerifFont}"
+                                FontSize="16"
+                                VerticalOptions="Center"
+                                TextColor="{StaticResource OnSurface}" />
 
-                        <BoxView
-                            Grid.Row="1"
-                            Grid.ColumnSpan="2"
-                            Color="#D9E2EC" />
-
-                    </Grid>
+                            <!-- Dato en serif bold + tono acento -->
+                            <Label
+                                Grid.Column="1"
+                                Text="{Binding Dato}"
+                                FontFamily="{StaticResource SerifFont}"
+                                FontSize="16"
+                                FontAttributes="Bold"
+                                TextColor="{StaticResource Primary}"
+                                VerticalOptions="Center"
+                                HorizontalTextAlignment="End" />
+                        </Grid>
+                    </Border>
 
                 </DataTemplate>
             </CollectionView.ItemTemplate>
-
         </CollectionView>
-
     </Grid>
 </ContentPage>
