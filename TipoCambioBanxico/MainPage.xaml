@@ -27,7 +27,7 @@
             <Label
                 Text="Consulta de tipo de cambio"
                 FontFamily="{StaticResource SerifFont}"
-                FontSize="34"
+                FontSize="24"
                 LineHeight="1.15"
                 TextColor="{StaticResource OnSurface}" />
 
